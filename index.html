@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#121016">
+<title>AINOVIQ BFSI Use-Case Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;0,900;1,700;1,800&family=JetBrains+Mono:wght@400;500;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121016;
+    --side: #19161d;
+    --card: #1a171e;
+    --raise: #221e28;
+    --line: #2e2a36;
+    --text: #edeaf2;
+    --body: #cdc8d8;
+    --muted: #a5a0b4;
+    --pink: #e56fa9;
+    --pink-soft: rgba(229,111,169,.14);
+    --green: #6fd3a3;
+    --green-soft: rgba(111,211,163,.12);
+    --violet: #a99cf5;
+    --violet-soft: rgba(169,156,245,.14);
+    --display: "Archivo", "Arial Black", Arial, sans-serif;
+    --sans: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 17px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; overflow-wrap: break-word;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0; }
+  h1, h2, h3, h4 { margin: 0; }
+
+  /* Layout */
+  .shell { display: grid; grid-template-columns: 300px minmax(0, 1fr); align-items: start; min-height: 100vh; }
+  aside {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    background: var(--side); border-right: 1px solid var(--line);
+    padding: 28px 22px;
+  }
+  main { min-width: 0; padding: 24px clamp(16px, 4vw, 72px) 40px; }
+  .stack { max-width: 1120px; margin: 0 auto; display: grid; gap: 24px; }
+
+  /* Sidebar */
+  .mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; font-size: 13px; font-weight: 500; }
+  .side-brand { display: block; text-decoration: none; color: var(--text); line-height: 1.6; margin-bottom: 26px; }
+  nav { display: grid; gap: 2px; }
+  .nav-item, nav summary {
+    display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 4px;
+    padding: 9px 8px; border-radius: 8px; text-decoration: none; cursor: pointer;
+    color: var(--muted); font-weight: 600; font-size: 16.5px; line-height: 1.3;
+  }
+  .nav-item:hover, nav summary:hover { background: rgba(255,255,255,.05); color: var(--text); }
+  .nav-item .n, nav summary .n { font-family: var(--mono); font-size: 13px; font-weight: 400; color: #8a8598; }
+  .nav-item.active { color: var(--text); background: rgba(255,255,255,.07); }
+  nav details[open] > summary { color: var(--text); }
+  nav summary { list-style: none; }
+  nav summary::-webkit-details-marker { display: none; }
+  .chev { width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); margin-right: 4px; }
+  nav details[open] .chev { transform: rotate(45deg); }
+  .subnav { display: grid; gap: 2px; padding: 2px 0 6px; }
+  .subnav .nav-item { font-size: 15px; font-weight: 500; grid-template-columns: 30px minmax(0, 1fr); padding: 7px 8px; }
+  .subnav .nav-item.has-badge { grid-template-columns: 30px minmax(0, 1fr) auto; }
+  .subnav .grp { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #8a8598; padding: 8px 8px 2px 38px; }
+  .badge { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; background: #2a2633; color: #b9b4c8; padding: 2px 8px; border-radius: 5px; white-space: nowrap; }
+
+  /* Cards (pages) */
+  .card {
+    background:
+      radial-gradient(900px 500px at 100% 0%, rgba(125,45,95,.28), transparent 60%),
+      radial-gradient(900px 500px at 0% 100%, rgba(55,55,150,.28), transparent 60%),
+      var(--card);
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: clamp(22px, 3.2vw, 44px);
+    scroll-margin-top: 20px; min-width: 0;
+  }
+  .card.plain { background: var(--card); }
+  .eyebrow { display: flex; align-items: center; gap: 14px; color: var(--text); margin-bottom: 22px; flex-wrap: wrap; }
+  .eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--pink); flex: none; }
+
+  /* Cover */
+  .cover { min-height: min(86vh, 820px); display: flex; flex-direction: column; }
+  .cover .center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 0 60px; }
+  .cover h1 { font-family: var(--display); font-weight: 900; color: var(--pink); font-size: clamp(42px, 7.4vw, 104px); line-height: 1.04; letter-spacing: -.02em; }
+  .rule { width: 76px; height: 3px; border-radius: 2px; background: var(--pink); margin: 26px auto; }
+  .cover .sub { font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(22px, 3.2vw, 44px); line-height: 1.15; letter-spacing: -.01em; color: var(--text); margin: 0; }
+  .internal-note { color: var(--muted); font-size: 15px; margin: -8px 0 0; }
+
+  /* Headings */
+  h2 { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.12; letter-spacing: -.015em; margin-bottom: 12px; }
+  h2 em { font-style: normal; color: var(--pink); }
+  .lead { color: var(--body); max-width: 760px; margin-bottom: 26px; font-size: 18px; }
+  h3.sub { font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1.25; margin: 34px 0 14px; }
+
+  /* Contents */
+  .toc { display: grid; gap: 0; max-width: 640px; }
+  .toc a { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; padding: 11px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 600; color: var(--text); }
+  .toc a:hover { color: var(--pink); }
+  .toc a .n { font-family: var(--mono); font-size: 13px; color: var(--muted); font-weight: 400; padding-top: 3px; }
+  .toc .grp { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 18px 0 6px; }
+
+  /* Steps */
+  .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .steps li { background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .steps .k { font-family: var(--mono); font-size: 13px; color: var(--pink); display: block; margin-bottom: 6px; }
+  .steps b { display: block; font-size: 18px; margin-bottom: 4px; }
+  .steps span.d { color: var(--body); font-size: 16px; }
+
+  /* Tables */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--raise); }
+  table { border-collapse: collapse; width: 100%; min-width: 680px; font-size: 16px; }
+  th, td { text-align: left; padding: 13px 16px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+  td { color: var(--body); }
+  td:first-child { color: var(--text); font-weight: 600; }
+  td a { text-decoration: none; }
+  td a:hover { color: var(--pink); text-decoration: underline; }
+  td.dir { color: var(--violet); }
+
+  /* Status */
+  .status { display: inline-block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 5px; white-space: nowrap; line-height: 1.5; }
+  .status.built { background: var(--green-soft); color: var(--green); }
+  .status.poc { background: var(--pink-soft); color: var(--pink); }
+  .status.pitch { background: var(--violet-soft); color: var(--violet); }
+  .status.future { background: #2a2633; color: #b9b4c8; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin-top: 22px; color: var(--muted); font-size: 15px; }
+
+  /* Two-up panels */
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .panel { background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+  .panel h4 { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; color: var(--muted); margin-bottom: 10px; }
+  .panel ul { padding-left: 18px; color: var(--body); font-size: 16px; }
+  .panel li { margin-bottom: 6px; }
+  .panel li:last-child { margin-bottom: 0; }
+  .panel p.note { margin: 12px 0 0; color: var(--muted); font-size: 15px; }
+  .panel.warn { border-left: 3px solid var(--pink); }
+  .panel.say { border-left: 3px solid var(--green); }
+  .panel.say h4 { color: var(--green); }
+  .panel.avoid { border-left: 3px solid var(--pink); }
+  .panel.avoid h4 { color: var(--pink); }
+
+  /* Use case */
+  .uc-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 22px; }
+  .uc-head .eyebrow { margin-bottom: 0; }
+  .uc h2 { color: var(--pink); margin-bottom: 8px; }
+  .uc .tag { font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(18px, 2vw, 24px); line-height: 1.25; color: var(--text); margin-bottom: 24px; }
+  .pitch { background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .pitch-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 8px; }
+  .pitch-top span { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .pitch .txt { margin: 0; font-size: 19px; line-height: 1.45; color: var(--text); }
+  .copy { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; background: transparent; color: var(--body); border: 1px solid #45404f; border-radius: 6px; padding: 5px 12px; cursor: pointer; }
+  .copy:hover { border-color: var(--pink); color: var(--pink); }
+  .copy.done { border-color: var(--green); color: var(--green); }
+  .sample { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .sample .t { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .sample p { color: var(--body); margin-bottom: 6px; font-size: 16px; }
+  .sample p b { color: var(--violet); font-weight: 600; }
+  .sample .out { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--green); font-weight: 600; }
+  .kpis { margin: 18px 0 0; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--violet); line-height: 1.8; }
+
+  /* Use-case detail */
+  .uc h3.sub { margin-top: 30px; }
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .facts .panel p { margin: 0; color: var(--text); font-size: 16px; }
+  .kv { list-style: none; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--raise); }
+  .kv li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 18px; padding: 11px 16px; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .kv li:last-child { border-bottom: 0; }
+  .kv b { font-weight: 600; color: var(--text); }
+  .kv span { color: var(--body); }
+  .panel .kv { border: 0; background: transparent; }
+  .panel .kv li { padding: 8px 0; margin: 0; }
+  .flow { list-style: none; padding: 0; counter-reset: f; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .flow li { counter-increment: f; background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .flow li::before { content: counter(f, decimal-leading-zero); display: block; font-family: var(--mono); font-size: 13px; color: var(--pink); margin-bottom: 4px; }
+  .flow b { display: block; font-size: 17px; }
+  .flow span { color: var(--body); font-size: 15.5px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+  .kpi-grid b { display: block; font-family: var(--display); font-weight: 900; font-size: 28px; line-height: 1.15; color: var(--pink); margin-bottom: 4px; }
+  .kpi-grid span { color: var(--body); font-size: 15.5px; }
+  .fine { color: var(--muted); font-size: 14.5px; margin: 12px 0 0; }
+  .convos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-top: 14px; }
+  .convo .q { font-family: var(--display); font-style: italic; font-weight: 700; font-size: 18px; line-height: 1.3; color: var(--text); margin-bottom: 10px; }
+  .convo .out { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--green); font-weight: 600; font-size: 15.5px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span { font-family: var(--mono); font-size: 12.5px; border: 1px solid #45404f; border-radius: 6px; padding: 5px 10px; color: var(--body); }
+  .stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .stage-name { font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .play { border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 14px; background: rgba(0,0,0,.18); }
+  .play-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 8px; }
+  .play-head h3 { font-family: var(--display); font-weight: 800; font-size: 21px; line-height: 1.25; }
+  .play > p { color: var(--body); }
+  .play > ul { padding-left: 18px; color: var(--body); font-size: 16px; }
+  .play > ul li { margin-bottom: 5px; }
+  .play .two { margin-top: 14px; }
+  table.wide { min-width: 900px; }
+
+  /* Pipeline */
+  .three { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .three .panel { border-style: dashed; }
+  .three h3 { font-family: var(--display); font-weight: 800; font-size: 19px; line-height: 1.25; margin: 12px 0 6px; }
+  .three p { color: var(--body); font-size: 16px; }
+  .three .kpis { margin-top: 10px; }
+
+  /* Languages */
+  .stats { display: flex; flex-wrap: wrap; gap: 14px 44px; margin: 6px 0 22px; }
+  .stats div { color: var(--muted); font-size: 16px; }
+  .stats b { display: block; font-family: var(--display); font-weight: 900; font-size: 46px; line-height: 1.1; color: var(--pink); }
+  .langs { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+  .langs li { background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1.25; }
+  .langs .k { display: block; font-family: var(--mono); font-weight: 400; font-size: 13px; color: var(--pink); margin-bottom: 6px; }
+  .todo { border: 1px dashed #4a4556; border-radius: 10px; padding: 14px 18px; color: var(--muted); font-size: 16px; }
+
+  footer { color: var(--muted); font-size: 15px; padding: 4px 2px 0; display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+
+  /* Narrow screens */
+  @media (max-width: 980px) {
+    .shell { display: block; }
+    aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 16px; }
+    .side-brand { margin-bottom: 12px; }
+    main { padding: 16px 12px 32px; }
+    .steps, .three, .stages { grid-template-columns: minmax(0, 1fr); }
+    .facts, .kpi-grid, .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cover { min-height: 60vh; }
+  }
+  @media (max-width: 700px) {
+    .two, .facts, .kpi-grid, .flow, .kv li { grid-template-columns: minmax(0, 1fr); }
+    body { font-size: 16px; }
+  }
+  @media print {
+    aside, .copy { display: none; }
+    .shell { display: block; }
+    .card { break-inside: avoid; }
+    body, .card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside>
+    <a class="side-brand mono" href="#cover">AINOVIQ Voice Agents · Internal</a>
+    <nav aria-label="Contents">
+      <a class="nav-item" href="#overview"><span class="n">1</span><span>How to use this?</span></a>
+      <details open>
+        <summary><span class="n">2</span><span>All BFSI use cases</span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="subnav">
+          <div class="grp">2.1 · In development</div>
+          <a class="nav-item" href="#leads"><span class="n"></span><span>Lead qualification</span></a>
+          <a class="nav-item" href="#welcome"><span class="n"></span><span>Welcome &amp; onboarding</span></a>
+          <a class="nav-item" href="#collections"><span class="n"></span><span>Collections &amp; recoveries</span></a>
+          <div class="grp">2.2 · Next</div>
+          <a class="nav-item has-badge" href="#pipeline"><span class="n"></span><span>Future pipeline</span><span class="badge">Soon</span></a>
+        </div>
+      </details>
+      <a class="nav-item" href="#languages"><span class="n">3</span><span>Languages supported</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="stack">
+
+      <!-- Cover -->
+      <section class="card cover" id="cover">
+        <div class="eyebrow mono">AINOVIQ Voice Agents · Internal</div>
+        <div class="center">
+          <h1>BFSI use cases</h1>
+          <div class="rule" aria-hidden="true"></div>
+          <p class="sub">what we pitch, what we cover</p>
+        </div>
+      </section>
+      <p class="internal-note">Internal only.</p>
+
+      <!-- Contents -->
+      <section class="card plain" id="contents">
+        <div class="eyebrow mono">Contents</div>
+        <div class="toc">
+          <a href="#overview"><span class="n">1</span><span>How to use this?</span></a>
+          <div class="grp">2.1 · Currently in development</div>
+          <a href="#leads"><span class="n">2.1</span><span>Lead qualification</span></a>
+          <a href="#welcome"><span class="n">2.1</span><span>Welcome &amp; onboarding</span></a>
+          <a href="#collections"><span class="n">2.1</span><span>Collections &amp; recoveries</span></a>
+          <div class="grp">2.2 · Next</div>
+          <a href="#pipeline"><span class="n">2.2</span><span>Future pipeline</span></a>
+          <a href="#languages"><span class="n">3</span><span>Languages supported</span></a>
+        </div>
+      </section>
+
+      <!-- 1 -->
+      <section class="card" id="overview">
+        <div class="eyebrow mono">1 · How to use this?</div>
+        <h2>Pick the use case, pitch it, <em>stay inside what we can claim.</em></h2>
+        <p class="lead">This brief is for anyone selling AINOVIQ voice agents into BFSI and NBFC accounts. It lists what we pitch, what each use case covers, and what to say and avoid.</p>
+
+        <ol class="steps">
+          <li><span class="k">01</span><b>Match the segment</b><span class="d">Start from who you are talking to, using the segment table.</span></li>
+          <li><span class="k">02</span><b>Open the use case</b><span class="d">Take the pitch line, discovery questions and say/avoid notes into the call.</span></li>
+          <li><span class="k">03</span><b>Check the guardrails</b><span class="d">Read the claims rules before any message, deck or email goes out.</span></li>
+        </ol>
+
+        <h3 class="sub">Use cases at a glance</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Use case</th><th>Status</th><th>Business goal</th><th>Typical trigger</th><th>Headline KPI</th></tr></thead>
+            <tbody>
+              <tr><td><a href="#leads">Lead qualification</a></td><td><span class="status pitch">In the pitch</span></td><td>Convert more leads, faster</td><td>Form, campaign or app drop-off</td><td class="dir">Qualified-lead conversion</td></tr>
+              <tr><td><a href="#welcome">Welcome &amp; onboarding</a></td><td><span class="status pitch">In the pitch</span></td><td>Activate and retain new customers</td><td>Account opened, loan disbursed, card delivered</td><td class="dir">Activation rate, first-EMI success</td></tr>
+              <tr><td><a href="#collections">Collections &amp; recoveries</a></td><td><span class="status built">Built · ongoing collaboration</span></td><td>Recover more, at lower cost</td><td>Due date, missed EMI, bounce, broken PTP</td><td class="dir">PTP kept, recovery rate, roll-forward</td></tr>
+              <tr><td><a href="#pipeline">Customer service, retention</a></td><td><span class="status future">Pipeline</span></td><td>See 2.2</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub">Where each segment fits</h3>
+        <div class="tablewrap">
+          <table class="wide">
+            <thead><tr><th>Segment</th><th>Lead qualification</th><th>Welcome &amp; onboarding</th><th>Collections</th><th>The win</th></tr></thead>
+            <tbody>
+              <tr><td>Retail and private banks</td><td>CASA, card and loan leads</td><td>New-account welcome and debit card activation</td><td>EMI and card dues</td><td class="dir">More products per customer</td></tr>
+              <tr><td>NBFCs and personal lending</td><td>Instant callbacks on loan enquiries</td><td>Disbursal welcome and e-NACH setup</td><td>Bounce and PTP recovery</td><td class="dir">Faster disbursals, fewer bounces</td></tr>
+              <tr><td>Credit cards</td><td>Pre-approved card offers and upgrades</td><td>Activation and first-use nudges</td><td>Minimum-due and revolving follow-ups</td><td class="dir">Active cards, lower delinquency</td></tr>
+              <tr><td>Housing finance</td><td>Home loan and balance-transfer leads</td><td>Document and disbursal follow-ups</td><td>EMI overdue and service objections</td><td class="dir">Shorter sanction cycles</td></tr>
+              <tr><td>Auto and two-wheeler finance</td><td>Dealer and website enquiries</td><td>Welcome and NACH confirmation</td><td>EMI default and roll-forward control</td><td class="dir">Fewer accounts into higher DPD</td></tr>
+              <tr><td>Insurance</td><td>Quote and renewal follow-ups</td><td>Welcome and policy verification calls</td><td>Premium-due reminders and lapse revival</td><td class="dir">Higher persistency</td></tr>
+              <tr><td>Microfinance</td><td>—</td><td>Repayment-schedule welcome calls</td><td>Group and individual reminders, early repayment-difficulty detection</td><td class="dir">Better repayment adherence</td></tr>
+              <tr><td>BNPL and digital lenders</td><td>App drop-off recovery</td><td>KYC completion nudges</td><td>High-volume, small-ticket dues</td><td class="dir">Recovery at the lowest cost</td></tr>
+              <tr><td>Asset reconstruction companies</td><td>—</td><td>—</td><td>Aged portfolios (6 months to 10 years), right-party contact and PTP, settlement-intent capture</td><td class="dir">Recoveries from dormant books</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub">Before you pitch</h3>
+        <div class="two">
+          <div class="panel warn">
+            <h4>Claims guardrails</h4>
+            <ul>
+              <li>Quote the numbers in this brief only as indicative POC targets, measured against a control group and agreed up front. Never as results or guarantees.</li>
+              <li>Describe the collections agent built with a loan recovery agency as an ongoing collaboration, not a proven deployment, and attribute no results to it.</li>
+              <li>Make no compliance claims until they are verified.</li>
+              <li>Label sample conversations and the reason breakdown as illustrative.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>What a POC needs from the prospect</h4>
+            <ul>
+              <li>A sponsor, and one use case and segment to start with</li>
+              <li>Their SOP, sample calls and a test list</li>
+              <li>Access to their CRM, or a file drop, for writing outcomes back</li>
+              <li>A named contact who refreshes the data during the pilot</li>
+            </ul>
+            <p class="note">A POC runs on 2,000–5,000 customers against a control group. Missing call data is the most common blocker, so agree it first.</p>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span>Status key</span>
+          <span class="status built">Built · ongoing collaboration</span>
+          <span class="status pitch">In the pitch</span>
+          <span class="status future">Pipeline</span>
+        </div>
+      </section>
+
+      <!-- 2 intro -->
+      <section class="card" id="usecases">
+        <div class="eyebrow mono">2 · All BFSI use cases</div>
+        <h2>Three AI agents. <em>One customer journey.</em></h2>
+        <p class="lead">Acquire, activate, collect. Win the customer faster, set them up right from day one, and collect on time. A prospect can start with one and add the others on the same platform.</p>
+        <p class="lead" style="margin-bottom:0">One customer, one context, end to end: what the lead call learns shapes the welcome call, and an e-NACH set up at onboarding prevents a bounce later.</p>
+      </section>
+
+      <!-- 2.1 use cases -->
+      <section class="card uc" id="leads">
+        <div class="uc-head">
+          <div class="eyebrow mono">2.1 · Acquire</div>
+          <span class="status pitch">In the pitch</span>
+        </div>
+        <h2>Lead qualification</h2>
+        <p class="tag">Call every lead in minutes. Hand sales only the ones ready to buy.</p>
+        <div class="pitch">
+          <div class="pitch-top"><span>Pitch line</span><button class="copy" type="button">Copy</button></div>
+          <p class="txt">The first lender to call usually wins. AINOVIQ calls every lead almost instantly, at any hour, qualifies it on your rules and passes your RMs a hot, ready-to-close customer.</p>
+        </div>
+<div class="facts"><div class="panel"><h4>Goes live in</h4><p>Weeks, starting from the current lead process</p></div><div class="panel"><h4>Products</h4><p>Personal, home, auto and gold loans, cards, insurance, CASA</p></div><div class="panel"><h4>Channels</h4><p>Voice, with WhatsApp and SMS follow-ups</p></div><div class="panel"><h4>Hands off to</h4><p>RM, branch or live sales transfer</p></div></div><h3 class="sub">What’s covered</h3><ul class="kv"><li><b>Inbound enquiry callbacks</b><span>Web, app, missed-call and ad leads</span></li><li><b>Application drop-off recovery</b><span>Brings half-filled applications back</span></li><li><b>Pre-approved offers</b><span>Outbound campaigns on approved lists</span></li><li><b>Cross-sell and upsell</b><span>Cards, top-ups and insurance to existing customers</span></li><li><b>Partner and DSA lead checks</b><span>Verifies interest before the team spends time</span></li><li><b>Nurture follow-ups</b><span>Re-engages “not now” leads at the right time</span></li></ul><h3 class="sub">When the call is triggered</h3><ul class="kv"><li><b>Form or app enquiry submitted</b><span>Within 2 minutes</span></li><li><b>Campaign response or missed call</b><span>Instant callback</span></li><li><b>Pre-approved list uploaded</b><span>Scheduled campaign</span></li><li><b>Lead asks for a later call</b><span>At the chosen time</span></li></ul><h3 class="sub">How the call flows</h3><ol class="flow"><li><b>Greet and consent</b><span>Introduces the brand, confirms it’s a good time</span></li><li><b>Understand the need</b><span>Product, amount, purpose</span></li><li><b>Qualify</b><span>Income, employment, city, existing EMIs</span></li><li><b>Score and decide</b><span>Hot, warm or nurture, on the customer’s rules</span></li><li><b>Book or transfer</b><span>RM slot, branch visit or live transfer</span></li><li><b>Update CRM</b><span>Scored lead, notes and next step</span></li></ol><h3 class="sub">KPIs we move</h3><div class="kpi-grid"><div class="panel"><b>&lt; 2 min</b><span>Speed to first call, 24/7</span></div><div class="panel"><b>+20–30%</b><span>Lead contact rate</span></div><div class="panel"><b>+25–40%</b><span>Qualified leads converted by sales</span></div><div class="panel"><b>−40–60%</b><span>Cost per qualified lead</span></div></div><p class="fine">Indicative POC targets, measured against a control group. Final targets are agreed with the customer before the POC.</p><h3 class="sub">Sample conversations</h3><div class="convos"><div class="panel convo"><h4>Eligibility check</h4><p class="q">“Am I even eligible for this loan?”</p><ul><li>Asks income, employment type, city and existing EMIs</li><li>Checks against the eligibility rules in real time</li><li>Shares an indicative range from the approved grid</li><li>Live-transfers the hot lead to an available RM</li></ul><p class="out">Hot lead · transferred to RM with full context</p></div><div class="panel convo"><h4>Price shopper</h4><p class="q">“I’m just comparing rates for now.”</p><ul><li>Shares current offers from the approved rate card</li><li>Highlights speed, tenure and no foreclosure fee</li><li>Captures amount and timeline</li><li>Sends the offer on WhatsApp and books a follow-up</li></ul><p class="out">Warm lead · offer sent, follow-up in 2 days</p></div><div class="panel convo"><h4>Future intent</h4><p class="q">“Not right now, maybe next month.”</p><ul><li>Asks what’s changing next month</li><li>Records the expected timeline</li><li>Sends a brochure and pre-check link</li><li>Schedules a nurture call on the right date</li></ul><p class="out">Nurture lead · callback set, nothing goes cold</p></div></div><h3 class="sub">What lands in the CRM</h3><div class="chips"><span>Lead score</span><span>Product and amount</span><span>Eligibility answers</span><span>RM meeting booked</span><span>Live transfer</span><span>Callback time</span><span>Not interested · reason</span><span>Language preference</span></div><h3 class="sub">For the sales call</h3><div class="two">
+          <div class="panel"><h4>Ask in discovery</h4><ul><li>How long does a new lead wait for the first call today?</li><li>What makes a lead hot, and who takes the callback?</li><li>Which CRM or LOS holds the lead record?</li></ul></div>
+          <div class="panel say"><h4>Say</h4><ul><li>“Calls every lead within minutes, at any hour”</li><li>“These are indicative POC targets, agreed with you up front”</li></ul></div>
+          <div class="panel avoid"><h4>Avoid</h4><ul><li>Quoting the ranges as results or guarantees</li><li>Presenting the sample conversations as customer results</li></ul></div>
+        </div>
+      </section>
+
+      <section class="card uc" id="welcome">
+        <div class="uc-head">
+          <div class="eyebrow mono">2.1 · Activate</div>
+          <span class="status pitch">In the pitch</span>
+        </div>
+        <h2>Welcome &amp; onboarding</h2>
+        <p class="tag">Welcome every customer. Activate every product. In week one.</p>
+        <div class="pitch">
+          <div class="pitch-top"><span>Pitch line</span><button class="copy" type="button">Copy</button></div>
+          <p class="txt">The first week decides whether a customer stays, pays and buys again. AINOVIQ calls every new customer, confirms what they signed up for, and gets auto-debit, cards and apps switched on before the first due date.</p>
+        </div>
+<div class="facts"><div class="panel"><h4>Goes live in</h4><p>Weeks, using the existing welcome script</p></div><div class="panel"><h4>Customers</h4><p>New-to-bank, new loan, new card and new policy holders</p></div><div class="panel"><h4>Channels</h4><p>Voice, with WhatsApp and SMS links</p></div><div class="panel"><h4>Hands off to</h4><p>Service, quality or grievance team</p></div></div><h3 class="sub">What’s covered</h3><ul class="kv"><li><b>Welcome calls</b><span>A warm, branded first conversation</span></li><li><b>Key-terms confirmation</b><span>Amount, EMI, tenure, fees and due date</span></li><li><b>Mis-selling checks</b><span>Flags concerns before they become complaints</span></li><li><b>e-NACH and auto-debit setup</b><span>Sends the link and confirms registration</span></li><li><b>Card and app activation</b><span>First use, PIN set-up, app login</span></li><li><b>KYC and document follow-ups</b><span>Closes pending items fast</span></li></ul><h3 class="sub">When the call is triggered</h3><ul class="kv"><li><b>Account opened or loan sanctioned</b><span>Within 24 hours</span></li><li><b>Loan disbursed</b><span>Within 48 hours</span></li><li><b>Card delivered</b><span>On delivery</span></li><li><b>KYC or documents pending</b><span>Day 1, 3 and 7</span></li><li><b>Policy issued</b><span>Before free-look ends</span></li><li><b>First EMI or premium due</b><span>5 days before</span></li></ul><h3 class="sub">How the call flows</h3><ol class="flow"><li><b>Verify identity</b><span>Confirms it’s the right customer</span></li><li><b>Welcome</b><span>Thanks them in the brand voice</span></li><li><b>Confirm key terms</b><span>Amount, EMI, fees, due date</span></li><li><b>Check understanding</b><span>Flags any concern or mis-sell</span></li><li><b>Activate</b><span>e-NACH, card, app, pending KYC</span></li><li><b>Update CRM</b><span>Status, flags and next steps</span></li></ol><h3 class="sub">KPIs we move</h3><div class="kpi-grid"><div class="panel"><b>100%</b><span>New customers reached within 48 hours</span></div><div class="panel"><b>+15–25%</b><span>e-NACH, card and app activation</span></div><div class="panel"><b>−10–20%</b><span>First-EMI bounces</span></div><div class="panel"><b>−30%</b><span>Time to close pending KYC and documents</span></div></div><p class="fine">Indicative POC targets, measured against a control group. Final targets are agreed with the customer before the POC.</p><h3 class="sub">Sample conversations</h3><div class="convos"><div class="panel convo"><h4>Activation</h4><p class="q">“How do I set up auto-debit?”</p><ul><li>Sends the e-NACH link by SMS or WhatsApp</li><li>Walks the customer through it, step by step</li><li>Confirms the registration status</li><li>Reminds them of the first EMI date</li></ul><p class="out">Auto-debit active before the first EMI</p></div><div class="panel convo"><h4>Mis-selling flag</h4><p class="q">“No one told me about this processing fee.”</p><ul><li>Explains the fee using the approved script</li><li>Logs a mis-selling flag with the details</li><li>Raises a ticket to the quality team</li><li>Tells the customer when to expect a callback</li></ul><p class="out">Concern caught early, complaint avoided</p></div><div class="panel convo"><h4>Pending KYC</h4><p class="q">“I haven’t uploaded my documents yet.”</p><ul><li>Lists exactly what’s pending</li><li>Sends a secure upload link</li><li>Agrees a time to finish it</li><li>Follows up automatically, escalates if stuck</li></ul><p class="out">KYC closed, onboarding complete</p></div></div><h3 class="sub">What lands in the CRM</h3><div class="chips"><span>Welcome completed</span><span>Key terms confirmed</span><span>Mis-selling flag</span><span>e-NACH status</span><span>Card / app activated</span><span>Pending documents</span><span>Cross-sell interest</span><span>CSAT</span></div><h3 class="sub">For the sales call</h3><div class="two">
+          <div class="panel"><h4>Ask in discovery</h4><ul><li>Which steps after disbursal or issuance are most often missed?</li><li>Who owns welcome calls today, and how many a day?</li><li>How many first EMIs bounce today?</li></ul></div>
+          <div class="panel say"><h4>Say</h4><ul><li>“Every new customer reached in the first week”</li><li>“These are indicative POC targets, agreed with you up front”</li></ul></div>
+          <div class="panel avoid"><h4>Avoid</h4><ul><li>Implying it is live with a customer</li><li>Quoting the ranges as results or guarantees</li></ul></div>
+        </div>
+      </section>
+
+      <section class="card uc" id="collections">
+        <div class="uc-head">
+          <div class="eyebrow mono">2.1 · Collect</div>
+          <span class="status built">Built · ongoing collaboration</span>
+        </div>
+        <h2>Collections &amp; recoveries</h2>
+        <p class="tag">Collect more. Spend less. Keep every call respectful.</p>
+        <div class="pitch">
+          <div class="pitch-top"><span>Pitch line</span><button class="copy" type="button">Copy</button></div>
+          <p class="txt">A reminder bot reads out the amount due. AINOVIQ understands why a customer hasn’t paid, negotiates within your rules, captures a promise and checks that it’s kept.</p>
+        </div>
+<div class="facts"><div class="panel"><h4>Goes live in</h4><p>Weeks, starting with one DPD bucket</p></div><div class="panel"><h4>Covers</h4><p>Pre-due, post-due and negotiation, up to aged ARC portfolios</p></div><div class="panel"><h4>Channels</h4><p>Voice, with payment links on SMS and WhatsApp</p></div><div class="panel"><h4>Hands off to</h4><p>Collection specialists for complex cases</p></div></div><h3 class="sub">What’s covered</h3><div class="stages"><div class="panel"><h4>Pre-due to 30 DPD</h4><p class="stage-name">Pre-due and early</p><ul><li>Due-date reminders</li><li>EMI and NACH bounce recovery</li><li>Promise-to-pay capture</li></ul></div><div class="panel"><h4>31–60 DPD</h4><p class="stage-name">Post-due and negotiation</p><ul><li>Broken-promise follow-up</li><li>Objection handling, partial payments</li><li>Disputes and “already paid”</li></ul></div><div class="panel"><h4>61–90+ DPD · ARC</h4><p class="stage-name">Late and recovery</p><ul><li>Repayment intent on aged accounts</li><li>Hardship and settlement routing</li><li>Right-party contact</li></ul></div></div><p class="fine">Collections intelligence runs across every stage: why customers aren’t paying, who will pay, and what to do next.</p><h3 class="sub">When the call is triggered</h3><ul class="kv"><li><b>EMI or card due date approaching</b><span>5 days and 1 day before</span></li><li><b>Auto-debit or NACH bounce</b><span>Same day</span></li><li><b>Payment missed</b><span>Day after due date</span></li><li><b>Promise to pay broken</b><span>Day after promise</span></li><li><b>Account moves bucket</b><span>At 31, 61 and 91 DPD</span></li></ul><h3 class="sub">How the call flows</h3><ol class="flow"><li><b>Verify the right party</b><span>No details shared before this</span></li><li><b>Remind</b><span>Amount and due date, clearly</span></li><li><b>Understand why</b><span>Cash-flow, dispute or unwilling</span></li><li><b>Negotiate</b><span>Only options the customer permits</span></li><li><b>Capture PTP and link</b><span>Amount, date, payment link</span></li><li><b>Follow up</b><span>Checks payment, updates CRM</span></li></ol><h3 class="sub">Three plays: pick where to start</h3><div class="play"><div class="play-head"><h3>Early delinquency collections</h3><span class="badge">Pre-due–30</span></div><p>The fastest payback. Reach every early-bucket customer within hours and close the loop before the account rolls.</p><ul><li>Reminds customers before and after the due date</li><li>Recovers failed auto-debit and NACH bounces</li><li>Captures a promise to pay with amount and date</li><li>Sends a payment link during the call</li></ul><div class="kpi-grid"><div class="panel"><b>+15–25%</b><span>PTP conversion</span></div><div class="panel"><b>+10–20%</b><span>Bounces recovered in 7 days</span></div><div class="panel"><b>−10–15%</b><span>Roll-forward to 31–60</span></div><div class="panel"><b>70–80%</b><span>Calls handled without an agent</span></div></div><div class="convos"><div class="panel convo"><h4>Promise to pay</h4><p class="q">“I’ll pay tomorrow.”</p><ul><li>Confirms the amount</li><li>Locks the exact date</li><li>Sends a payment link while still on the call</li><li>Checks payment status on the promised date</li></ul><p class="out">PTP captured: amount, date, link sent</p></div><div class="panel convo"><h4>Failed auto-debit</h4><p class="q">“My EMI bounced? I didn’t know.”</p><ul><li>Explains the failed debit and amount due</li><li>Finds the cause: balance, mandate or account change</li><li>Offers a payment link or a retry date</li><li>Flags mandate issues for re-registration</li></ul><p class="out">Retry date confirmed, cause recorded</p></div></div></div><div class="play"><div class="play-head"><h3>Intelligent PTP and recovery</h3><span class="badge">31–90+</span></div><p>Where IVR and scripted bots give up. The agent negotiates a commitment the customer can actually keep.</p><ul><li>Follows up broken promises and learns why</li><li>Handles salary delay, medical and job-loss objections</li><li>Offers partial payments or revised dates the customer approves</li><li>Routes hardship and settlement cases to the customer’s team</li></ul><div class="kpi-grid"><div class="panel"><b>+10–15 pts</b><span>PTP kept ratio</span></div><div class="panel"><b>+15–20%</b><span>Broken promises recovered</span></div><div class="panel"><b>+10–20%</b><span>Recovery per connected call</span></div><div class="panel"><b>2×</b><span>Qualified settlement leads</span></div></div><div class="convos"><div class="panel convo"><h4>Affordability</h4><p class="q">“I don’t have money right now.”</p><ul><li>Checks if it’s a temporary cash-flow gap</li><li>Asks when funds are expected</li><li>Tests whether a partial payment is possible today</li><li>Routes hardship requests for approval</li></ul><p class="out">Partial PTP agreed, hardship flag if needed</p></div><div class="panel convo"><h4>Reconciliation</h4><p class="q">“I’ve already paid.”</p><ul><li>Asks when and how they paid</li><li>Collects the transaction reference</li><li>Checks status against the system</li><li>Closes it, or raises a reconciliation request</li></ul><p class="out">Verified and closed, or reconciliation raised</p></div><div class="panel convo"><h4>Dispute</h4><p class="q">“Your bank has charged me incorrectly.”</p><ul><li>Understands the specific issue</li><li>Categorises: interest, penalty or payment not reflected</li><li>Creates a dispute ticket and pauses collection</li><li>Follows up once it’s resolved</li></ul><p class="out">Dispute logged, collection paused, follow-up set</p></div></div></div><div class="play"><div class="play-head"><h3>Collections intelligence</h3><span class="badge">All buckets</span></div><p>Every call becomes data the strategy team can act on: why customers aren’t paying, who will pay, and the next best move.</p><ul><li>Reason codes on every connected call</li><li>Payment-intent score per customer</li><li>Next-best action: remind, negotiate, route or pause</li><li>Prioritised queues for human collectors</li></ul><div class="kpi-grid"><div class="panel"><b>90%+</b><span>Calls with a reason code</span></div><div class="panel"><b>+25–35%</b><span>Collector productivity</span></div><div class="panel"><b>10–20%</b><span>Accounts escalated to humans</span></div><div class="panel"><b>Live</b><span>Dashboards per role</span></div></div><div class="two"><div class="panel"><h4>Why customers haven’t paid · illustrative</h4><ul class="kv"><li><b>Salary delay</b><span>34%</span></li><li><b>Temporary cash crunch</b><span>22%</span></li><li><b>Already paid</b><span>12%</span></li><li><b>Dispute / charges</b><span>9%</span></li><li><b>Unwilling</b><span>9%</span></li><li><b>Job loss</b><span>8%</span></li><li><b>Medical</b><span>6%</span></li></ul></div><div class="panel"><h4>Intent segments and next-best action · illustrative</h4><ul class="kv"><li><b>Will pay</b><span>Needs a reminder and a link → automated follow-up</span></li><li><b>Can pay, needs a plan</b><span>Cash-flow gap → negotiate partial PTP</span></li><li><b>Disputing</b><span>Charge or payment issue → route to service, pause</span></li><li><b>Low intent, high value</b><span>Aged, large outstanding → human specialist</span></li></ul></div></div></div><p class="fine">Indicative POC targets, measured against a control group. Final targets are agreed with the customer before the POC.</p><h3 class="sub">What lands in the CRM</h3><div class="chips"><span>PTP captured</span><span>Partial payment agreed</span><span>Already paid · verify</span><span>Hardship flagged</span><span>Dispute raised</span><span>Settlement intent</span><span>Reason code</span><span>Escalate to specialist</span></div><h3 class="sub">For the sales call</h3><div class="two">
+          <div class="panel"><h4>Ask in discovery</h4><ul><li>How many outbound calls a day, and with how many callers?</li><li>Which DPD bucket hurts most today?</li><li>Which fields can you send per account, and where should outcomes be written?</li></ul></div>
+          <div class="panel say"><h4>Say</h4><ul><li>“An ongoing collaboration with a loan recovery agency”</li><li>“These are indicative POC targets, agreed with you up front”</li></ul></div>
+          <div class="panel avoid"><h4>Avoid</h4><ul><li>Attributing any recovery, PTP or cost result to an existing customer</li><li>Quoting the ranges as results or guarantees</li><li>Calling the illustrative reason breakdown real data</li></ul></div>
+        </div>
+      </section>
+
+      <!-- 2.2 -->
+      <section class="card" id="pipeline">
+        <div class="uc-head">
+          <div class="eyebrow mono">2.2 · Future pipeline</div>
+          <span class="badge">Soon</span>
+        </div>
+        <h2>On the roadmap, <em>not yet in development.</em></h2>
+        <p class="lead">These use cases are on the AINOVIQ BFSI one-pager. Pitch them as the roadmap, not as something live.</p>
+        <div class="three">
+          <div class="panel">
+            <span class="status future">Pipeline</span>
+            <h3>Customer service</h3>
+            <p>Query resolution, service requests, onboarding support, and a handover to a person with the full conversation.</p>
+            <p class="kpis">Containment ↑ · AHT ↓</p>
+          </div>
+          <div class="panel">
+            <span class="status future">Pipeline</span>
+            <h3>Customer retention</h3>
+            <p>Churn signals, proactive engagement and retention workflows run end to end.</p>
+            <p class="kpis">Churn ↓ · Lifetime value ↑</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="card" id="languages">
+        <div class="eyebrow mono">3 · Languages supported</div>
+        <h2>English and <em>seven Indian languages.</em></h2>
+        <p class="lead">Our voice agents can hold the conversation in any of these. Ask the prospect which languages their customers speak, and by region, before scoping a POC.</p>
+        <ol class="langs">
+          <li><span class="k">01</span>English</li>
+          <li><span class="k">02</span>Hindi</li>
+          <li><span class="k">03</span>Kannada</li>
+          <li><span class="k">04</span>Punjabi</li>
+          <li><span class="k">05</span>Tamil</li>
+          <li><span class="k">06</span>Marathi</li>
+          <li><span class="k">07</span>Telugu</li>
+          <li><span class="k">08</span>Gujarati</li>
+        </ol>
+      </section>
+
+      <footer>
+        <span>Internal only. Not for distribution.</span>
+        <span>AINOVIQ · A Blackngreen company</span>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('aside a.nav-item'));
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var targets = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) { l.classList.remove('active'); l.removeAttribute('aria-current'); });
+          var a = map[e.target.id];
+          if (a) { a.classList.add('active'); a.setAttribute('aria-current', 'true'); }
+        });
+      }, { rootMargin: '-15% 0px -75% 0px' });
+      targets.forEach(function (t) { io.observe(t); });
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.copy'), function (btn) {
+      btn.addEventListener('click', function () {
+        var txt = btn.closest('.pitch').querySelector('.txt').textContent.trim();
+        var done = function () {
+          btn.textContent = 'Copied'; btn.classList.add('done');
+          setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(done, function () { fallbackCopy(txt); done(); });
+        } else { fallbackCopy(txt); done(); }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
